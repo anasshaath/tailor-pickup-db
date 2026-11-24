@@ -1,0 +1,22 @@
+[
+  {
+    version: 'PostgreSQL 19.0 (PGlite 0.6.0) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.13 (e13ee988ce3d87a738dd8f3661d02223308c412a), 32-bit'
+  }
+]
+01-schema.sql
+02-sample-data.sql
+[{"id":1,"receipt_number":1,"garment_type":"Trousers","alteration":"Shorten hems","status":"ready"},{"id":2,"receipt_number":1,"garment_type":"Jacket","alteration":"Replace zipper","status":"in_progress"},{"id":3,"receipt_number":1,"garment_type":"Shirt","alteration":"Shorten sleeves","status":"received"}]
+03-queries.sql
+[{"id":4,"receipt_number":1,"garment_type":"Coat","alteration":"Replace button","status":"received"}]
+[{"id":4,"garment_type":"Coat","status":"ready"}]
+[{"id":4,"garment_type":"Coat"}]
+[{"remaining_demo_rows":0}]
+[{"full_name":"Deniz Kaya","receipt_number":1,"garment_type":"Trousers","alteration":"Shorten hems"}]
+[{"status":"in_progress","job_count":1},{"status":"ready","job_count":1},{"status":"received","job_count":1}]
+[{"id":1,"garment_type":"Trousers"},{"id":2,"garment_type":"Jacket"}]
+[{"id":3,"garment_type":"Shirt"}]
+04-transactions.sql
+[{"phone":"TX-COMMIT","customer_count":1,"receipt_count":1},{"phone":"TX-ROLLBACK","customer_count":0,"receipt_count":0}]
+05-index.sql
+[{"QUERY PLAN":"Seq Scan on benchmark_jobs  (cost=0.00..1192.00 rows=3 width=28) (actual time=3.041..5.011 rows=3.00 loops=1)"},{"QUERY PLAN":"  Filter: (receipt_number = 12000)"},{"QUERY PLAN":"  Rows Removed by Filter: 59997"},{"QUERY PLAN":"  Buffers: local hit=442"},{"QUERY PLAN":"Planning:"},{"QUERY PLAN":"  Buffers: shared hit=14"},{"QUERY PLAN":"Planning Time: 0.138 ms"},{"QUERY PLAN":"Execution Time: 5.092 ms"}]
+[{"QUERY PLAN":"Index Scan using benchmark_jobs_receipt_idx on benchmark_jobs  (cost=0.29..8.34 rows=3 width=28) (actual time=0.029..0.033 rows=3.00 loops=1)"},{"QUERY PLAN":"  Index Cond: (receipt_number = 12000)"},{"QUERY PLAN":"  Index Searches: 1"},{"QUERY PLAN":"  Buffers: local hit=1 read=2"},{"QUERY PLAN":"Planning:"},{"QUERY PLAN":"  Buffers: shared hit=14, local read=1"},{"QUERY PLAN":"Planning Time: 0.248 ms"},{"QUERY PLAN":"Execution Time: 0.057 ms"}]
